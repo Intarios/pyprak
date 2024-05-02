@@ -12,6 +12,8 @@ env:
   PYTHON_GREETINGS_REPO: "mtararujs/python-greetings"
   PYTHON_GREETINGS_REF: "4e911440a9886c7c26ccbb4eb55f0bc2a5067b51"
   PYTHON_GREETINGS_DIR: "python-greetings"
+  JS_API_FRAMEWORK_REPO: "mtararujs/course-js-api-framework"
+  JS_API_FRAMEWORK_DIR: "js-api-framework"
 
 jobs:
   
@@ -38,6 +40,16 @@ jobs:
     steps:
       - name: Starting Job
         run: echo "Testing on DEV"
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: ${{ env.JS_API_FRAMEWORK_REPO }}
+          path: ${{ env.JS_API_FRAMEWORK_DIR }}
+      - name: Install node packages
+        working-directory: ${{ env.JS_API_FRAMEWORK_DIR }}
+        run: "npm install"
+      - name: Run test
+        working-directory: ${{ env.JS_API_FRAMEWORK_DIR }}
+        run: "npm run greetings greetings_dev"
         
   deploy-to-staging:
     runs-on: self-hosted
