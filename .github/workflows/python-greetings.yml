@@ -14,21 +14,6 @@ env:
   PYTHON_GREETINGS_DIR: "python-greetings"
 
 jobs:
-
-  # install-pip-deps:
-  #   runs-on: self-hosted
-  #   steps:
-  #     - name: Starting Job
-  #       run: echo "Installing pip dependencies"
-  #     - uses: actions/checkout@v3.5.2
-  #     - uses: actions/checkout@v3.5.2
-  #       with:
-  #         repository: ${{ env.PYTHON_GREETINGS_REPO }}
-  #         path: ${{ env.PYTHON_GREETINGS_DIR }}
-  #         ref: ${{ env.PYTHON_GREETINGS_REF }}
-  #     - name: Install dependencies
-  #       working-directory:  ${{ env.PYTHON_GREETINGS_DIR }}
-  #       run: pip3 install -r requirements.txt 
   
   install-pip-deps:
     runs-on: self-hosted
@@ -39,7 +24,6 @@ jobs:
     runs-on: self-hosted
     needs: [install-pip-deps]
     steps:
-      #- uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/deploy
         with:
           port: 7001
@@ -56,7 +40,6 @@ jobs:
     runs-on: self-hosted
     needs: [tests-on-dev]
     steps:
-      #- uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/deploy
         with:
           port: 7002
@@ -73,7 +56,6 @@ jobs:
     runs-on: self-hosted
     needs: [tests-on-staging]
     steps:
-      #- uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/deploy
         with:
           port: 7003
@@ -90,7 +72,6 @@ jobs:
     runs-on: self-hosted
     needs: [tests-on-preprod]
     steps:
-      #- uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/deploy
         with:
           port: 7004
