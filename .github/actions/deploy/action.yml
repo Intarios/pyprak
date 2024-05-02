@@ -22,4 +22,4 @@ runs:
       - name: Start new server instance
         shell: pwsh
         working-directory: "${{ env.PYTHON_GREETINGS_DIR }}-${{ inputs.enviroment }}"
-        run: "cmd /c \"pm2 start app.py --name greetings-app-${{ inputs.enviroment }} -- --port=${{ inputs.port }}\""
+        run: "cmd /c \"start pm2 start app.py --name greetings-app-${{ inputs.enviroment }} -- --port=${{ inputs.port }}\""
