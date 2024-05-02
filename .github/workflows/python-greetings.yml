@@ -15,22 +15,26 @@ env:
 jobs:
   install-pip-deps:
     runs-on: $RUN_ENVIRONMENT
-  deploy-to-dev:
-    runs-on: $RUN_ENVIRONMENT
-  tests-on-dev:
-    runs-on: $RUN_ENVIRONMENT
-  deploy-to-staging:
-    runs-on: $RUN_ENVIRONMENT
-  tests-on-staging:
-    runs-on: $RUN_ENVIRONMENT
-  deploy-to-preprod:
-    runs-on: $RUN_ENVIRONMENT
-  tests-on-preprod:
-    runs-on: $RUN_ENVIRONMENT
-  deploy-to-prod:
-    runs-on: $RUN_ENVIRONMENT
-  Tests-on-prod:
-    runs-on: $RUN_ENVIRONMENT
+    steps:
+      - name: test
+        run: echo Hello pain and suffering!
+    
+  # deploy-to-dev:
+  #   runs-on: $RUN_ENVIRONMENT
+  # tests-on-dev:
+  #   runs-on: $RUN_ENVIRONMENT
+  # deploy-to-staging:
+  #   runs-on: $RUN_ENVIRONMENT
+  # tests-on-staging:
+  #   runs-on: $RUN_ENVIRONMENT
+  # deploy-to-preprod:
+  #   runs-on: $RUN_ENVIRONMENT
+  # tests-on-preprod:
+  #   runs-on: $RUN_ENVIRONMENT
+  # deploy-to-prod:
+  #   runs-on: $RUN_ENVIRONMENT
+  # Tests-on-prod:
+  #   runs-on: $RUN_ENVIRONMENT
 
   # build:
   #   # The type of runner that the job will run on
