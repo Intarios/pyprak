@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Python Greetings CI
 
 on:
@@ -22,7 +20,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Prepare for Install
-        run: "cmd /c \"pm2 delete all & set \\\"errorlevel=0\\\"\"" # Nepieciešams, jo github mēģina sākumā izdzēst repo folderi bet nevar, ja no turienes jau ir palaistas programmas
+        run: "pm2 delete all & set \"errorlevel=0\"" # Nepieciešams, jo github mēģina sākumā izdzēst repo folderi bet nevar, ja no turienes jau ir palaistas programmas
       - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/install
 
