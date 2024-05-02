@@ -30,24 +30,6 @@ jobs:
         working-directory:  ${{ env.PYTHON_GREETINGS_DIR }}
         run: pip3 install -r requirements.txt 
 
-  # deploy-to-dev:
-  #   runs-on: self-hosted
-  #   needs: [install-pip-deps]
-  #   steps:
-  #     - name: Starting Job
-  #       run: echo "Deploying to DEV"
-  #     - uses: actions/checkout@v3.5.2
-  #     - uses: actions/checkout@v3.5.2
-  #       with:
-  #         repository: ${{ env.PYTHON_GREETINGS_REPO }}
-  #         path: ${{ env.PYTHON_GREETINGS_DIR }}
-  #         ref: ${{ env.PYTHON_GREETINGS_REF }}
-  #     - name: Kill old server instance
-  #       run: "cmd /c \"pm2 delete greetings-app-dev & set \\\"errorlevel=0\\\"\""
-  #     - name: Start new server instance
-  #       working-directory: ${{ env.PYTHON_GREETINGS_DIR }}
-  #       run: "cmd /c \"pm2 start app.py --name greetings-app-dev -- --port=7001\""
-
   deploy-to-dev:
     runs-on: self-hosted
     needs: [install-pip-deps]
@@ -74,8 +56,16 @@ jobs:
     runs-on: self-hosted
     needs: [tests-on-dev]
     steps:
-      - name: Starting Job
-        run: echo "Deploying to STAGING"
+      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: ${{ env.PYTHON_GREETINGS_REPO }}
+          path: ${{ env.PYTHON_GREETINGS_DIR }}
+          ref: ${{ env.PYTHON_GREETINGS_REF }}
+      - uses: ./.github/actions/deploy
+        with:
+          port: 7002
+          enviroment: 'staging'
         
   tests-on-staging:
     runs-on: self-hosted
@@ -88,8 +78,16 @@ jobs:
     runs-on: self-hosted
     needs: [tests-on-staging]
     steps:
-      - name: Starting Job
-        run: echo "Deploying to PRE-PRODUCTION"
+      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: ${{ env.PYTHON_GREETINGS_REPO }}
+          path: ${{ env.PYTHON_GREETINGS_DIR }}
+          ref: ${{ env.PYTHON_GREETINGS_REF }}
+      - uses: ./.github/actions/deploy
+        with:
+          port: 7003
+          enviroment: 'preprod'
         
   tests-on-preprod:
     runs-on: self-hosted
@@ -102,8 +100,16 @@ jobs:
     runs-on: self-hosted
     needs: [tests-on-preprod]
     steps:
-      - name: Starting Job
-        run: echo "Deploying to PRODUCTION"
+      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: ${{ env.PYTHON_GREETINGS_REPO }}
+          path: ${{ env.PYTHON_GREETINGS_DIR }}
+          ref: ${{ env.PYTHON_GREETINGS_REF }}
+      - uses: ./.github/actions/deploy
+        with:
+          port: 7004
+          enviroment: 'prod'
         
   Tests-on-prod:
     runs-on: self-hosted
@@ -111,23 +117,3 @@ jobs:
     steps:
       - name: Starting Job
         run: echo "Testing on PRODUCTION"
-        
-
-  # build:
-  #   # The type of runner that the job will run on
-  #   runs-on: ubuntu-latest
-
-  #   # Steps represent a sequence of tasks that will be executed as part of the job
-  #   steps:
-  #     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-  #     - uses: actions/checkout@v4
-
-  #     # Runs a single command using the runners shell
-  #     - name: Run a one-line script
-  #       run: echo Hello, world!
-
-  #     # Runs a set of commands using the runners shell
-  #     - name: Run a multi-line script
-  #       run: |
-  #         echo Add other actions to build,
-  #         echo test, and deploy your project.
