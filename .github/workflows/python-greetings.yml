@@ -10,28 +10,69 @@ on:
   workflow_dispatch:
 
 jobs:
+
   install-pip-deps:
     runs-on: self-hosted
     steps:
-      - name: test
-        run: echo Hello pain and suffering!
+      - name: Starting Job
+        run: echo "Installing pip dependencies"
     
-  # deploy-to-dev:
-  #   runs-on: $RUN_ENVIRONMENT
-  # tests-on-dev:
-  #   runs-on: $RUN_ENVIRONMENT
-  # deploy-to-staging:
-  #   runs-on: $RUN_ENVIRONMENT
-  # tests-on-staging:
-  #   runs-on: $RUN_ENVIRONMENT
-  # deploy-to-preprod:
-  #   runs-on: $RUN_ENVIRONMENT
-  # tests-on-preprod:
-  #   runs-on: $RUN_ENVIRONMENT
-  # deploy-to-prod:
-  #   runs-on: $RUN_ENVIRONMENT
-  # Tests-on-prod:
-  #   runs-on: $RUN_ENVIRONMENT
+  deploy-to-dev:
+    runs-on: self-hosted
+    needs: [install-pip-deps]
+    steps:
+      - name: Starting Job
+        run: echo "Deploying to DEV"
+
+  tests-on-dev:
+    runs-on: self-hosted
+    needs: [deploy-to-dev]
+    steps:
+      - name: Starting Job
+        run: echo "Testing on DEV"
+        
+  deploy-to-staging:
+    runs-on: self-hosted
+    needs: [tests-on-dev]
+    steps:
+      - name: Starting Job
+        run: echo "Deploying to STAGING"
+        
+  tests-on-staging:
+    runs-on: self-hosted
+    needs: [deploy-to-staging]
+    steps:
+      - name: Starting Job
+        run: echo "Testing on STAGING"
+        
+  deploy-to-preprod:
+    runs-on: self-hosted
+    needs: [tests-on-staging]
+    steps:
+      - name: Starting Job
+        run: echo "Deploying to PRE-PRODUCTION"
+        
+  tests-on-preprod:
+    runs-on: self-hosted
+    needs: [deploy-to-preprod]
+    steps:
+      - name: Starting Job
+        run: echo "Testing on PRE-PRODUCTION"
+        
+  deploy-to-prod:
+    runs-on: self-hosted
+    needs: [tests-on-preprod]
+    steps:
+      - name: Starting Job
+        run: echo "Deploying to PRODUCTION"
+        
+  Tests-on-prod:
+    runs-on: self-hosted
+    needs: [deploy-to-prod]
+    steps:
+      - name: Starting Job
+        run: echo "Testing on PRODUCTION"
+        
 
   # build:
   #   # The type of runner that the job will run on
