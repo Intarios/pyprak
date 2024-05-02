@@ -4,10 +4,10 @@ runs:
       - name: Starting Job
         shell: pwsh
         run: echo "Installing pip dependencies"
-      - name: Prepare Repo
+      - name: Prepare PM2
         shell: pwsh
         run: "cmd /c \"pm2 delete all & set \\\"errorlevel=0\\\"\""
-        uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
       - uses: actions/checkout@v3.5.2
         with:
           repository: ${{ env.PYTHON_GREETINGS_REPO }}
