@@ -6,18 +6,21 @@ runs:
   using: "composite"
   steps:
       - name: Starting Job
-        shell: pwsh
         run: echo "Testing on ${{ inputs.enviroment }}"
+        shell: cmd
+        
       - uses: actions/checkout@v3.5.2
         with:
           repository: ${{ env.JS_API_FRAMEWORK_REPO }}
           path: "${{ env.JS_API_FRAMEWORK_DIR }}-${{ inputs.enviroment }}"
           ref: ${{ env.JS_API_FRAMEWORK_REF }}
+          
       - name: Install packages
         working-directory: "${{ env.JS_API_FRAMEWORK_DIR }}-${{ inputs.enviroment }}"
-        shell: pwsh
         run: "npm install"
+        shell: cmd
+        
       - name: Run test
         working-directory: "${{ env.JS_API_FRAMEWORK_DIR }}-${{ inputs.enviroment }}"
-        shell: pwsh
         run: "npm run greetings greetings_${{ inputs.enviroment }}"
+        shell: cmd
