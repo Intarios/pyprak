@@ -16,4 +16,4 @@ runs:
         run: pip3 install -r requirements.txt
       - name: Prepare PM2
         shell: pwsh
-        run: "cmd /c \"pm2 delete all\""
+        run: "cmd /c \"pm2 delete all & set \\\"errorlevel=0\\\"\""
