@@ -11,10 +11,16 @@ runs:
       - name: Starting Job
         shell: pwsh
         run: echo "Deploying to ${{ inputs.enviroment }}"
+      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: ${{ env.PYTHON_GREETINGS_REPO }}
+          path: "${{ env.PYTHON_GREETINGS_DIR }}-${{ inputs.enviroment }}"
+          ref: ${{ env.PYTHON_GREETINGS_REF }}
       - name: Kill old server instance
         shell: pwsh
         run: "cmd /c \"pm2 delete greetings-app-${{ inputs.enviroment }} & set \\\"errorlevel=0\\\"\""
       - name: Start new server instance
         shell: pwsh
-        working-directory: ${{ env.PYTHON_GREETINGS_DIR }}
+        working-directory: "${{ env.PYTHON_GREETINGS_DIR }}-${{ inputs.enviroment }}"
         run: "cmd /c \"pm2 start app.py --name greetings-app-${{ inputs.enviroment }} -- --port=${{ inputs.port }}\""
