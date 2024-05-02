@@ -12,6 +12,7 @@ runs:
         with:
           repository: ${{ env.JS_API_FRAMEWORK_REPO }}
           path: "${{ env.JS_API_FRAMEWORK_DIR }}-${{ inputs.enviroment }}"
+          ref: ${{ env.JS_API_FRAMEWORK_REF }}
       - name: Install packages
         working-directory: "${{ env.JS_API_FRAMEWORK_DIR }}-${{ inputs.enviroment }}"
         shell: pwsh
