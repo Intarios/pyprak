@@ -8,15 +8,26 @@ on:
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
+env:
+  PYTHON_GREETINGS_DIR: "python-greetings"
 
 jobs:
 
   install-pip-deps:
+  
     runs-on: self-hosted
     steps:
       - name: Starting Job
         run: echo "Installing pip dependencies"
-    
+      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: $PYTHON_GREETINGS_DIR
+      - name: Install dependencies
+        working-directory:  $PYTHON_GREETINGS_DIR
+        run: pip3 install -r requirements.txt 
+
   deploy-to-dev:
     runs-on: self-hosted
     needs: [install-pip-deps]
