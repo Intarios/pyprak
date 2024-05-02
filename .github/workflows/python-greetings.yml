@@ -21,7 +21,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Prepare for Install
-        run: "cmd /c \"pm2 delete all & set \\\"errorlevel=0\\\"\""
+        run: "cmd /c \"pm2 delete all & set \\\"errorlevel=0\\\"\"" # Nepieciešams, jo github mēģina sākumā izdzēst repo folderi bet nevar, ja no turienes jau ir palaistas programmas
       - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/install
 
@@ -38,18 +38,9 @@ jobs:
     runs-on: self-hosted
     needs: [deploy-to-dev]
     steps:
-      - name: Starting Job
-        run: echo "Testing on DEV"
-      - uses: actions/checkout@v3.5.2
+      - uses: ./.github/actions/test
         with:
-          repository: ${{ env.JS_API_FRAMEWORK_REPO }}
-          path: ${{ env.JS_API_FRAMEWORK_DIR }}
-      - name: Install node packages
-        working-directory: ${{ env.JS_API_FRAMEWORK_DIR }}
-        run: "npm install"
-      - name: Run test
-        working-directory: ${{ env.JS_API_FRAMEWORK_DIR }}
-        run: "npm run greetings greetings_dev"
+          enviroment: 'dev'
         
   deploy-to-staging:
     runs-on: self-hosted
@@ -64,8 +55,9 @@ jobs:
     runs-on: self-hosted
     needs: [deploy-to-staging]
     steps:
-      - name: Starting Job
-        run: echo "Testing on STAGING"
+      - uses: ./.github/actions/test
+        with:
+          enviroment: 'staging'
         
   deploy-to-preprod:
     runs-on: self-hosted
@@ -80,8 +72,9 @@ jobs:
     runs-on: self-hosted
     needs: [deploy-to-preprod]
     steps:
-      - name: Starting Job
-        run: echo "Testing on PRE-PRODUCTION"
+      - uses: ./.github/actions/test
+        with:
+          enviroment: 'preprod'
         
   deploy-to-prod:
     runs-on: self-hosted
@@ -96,5 +89,6 @@ jobs:
     runs-on: self-hosted
     needs: [deploy-to-prod]
     steps:
-      - name: Starting Job
-        run: echo "Testing on PRODUCTION"
+      - uses: ./.github/actions/test
+        with:
+          enviroment: 'prod'
