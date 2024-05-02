@@ -19,8 +19,8 @@ jobs:
   install-pip-deps:
     runs-on: self-hosted
     steps:
-      - name: Prepare for Install
-        run: "pm2 delete all & set \"errorlevel=0\"" # Nepieciešams, jo github mēģina sākumā izdzēst repo folderi bet nevar, ja no turienes jau ir palaistas programmas
+      # - name: Prepare for Install
+      #   run: "pm2 delete all & set \"errorlevel=0\"" # Nepieciešams, jo github mēģina sākumā izdzēst repo folderi bet nevar, ja no turienes jau ir palaistas programmas
       - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/install
 
