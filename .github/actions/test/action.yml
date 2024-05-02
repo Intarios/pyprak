@@ -1,0 +1,19 @@
+inputs:
+  enviroment:
+    description: 'Environment'
+    default: 'unknown'
+runs:
+  using: "composite"
+  steps:
+      - name: Starting Job
+        run: echo "Testing on ${{ inputs.enviroment }}"
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: ${{ env.JS_API_FRAMEWORK_REPO }}
+          path: "${{ env.JS_API_FRAMEWORK_DIR }}-${{ inputs.enviroment }}"
+      - name: Install packages
+        working-directory: "${{ env.JS_API_FRAMEWORK_DIR }}-${{ inputs.enviroment }}"
+        run: "npm install"
+      - name: Run test
+        working-directory: "${{ env.JS_API_FRAMEWORK_DIR }}-${{ inputs.enviroment }}"
+        run: "npm run greetings greetings_${{ inputs.enviroment }}"
