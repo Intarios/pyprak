@@ -4,11 +4,13 @@ runs:
       - name: Starting Job
         run: echo "Installing pip dependencies"
         shell: cmd
+        
       - uses: actions/checkout@v3.5.2
         with:
           repository: ${{ env.PYTHON_GREETINGS_REPO }}
           path: ${{ env.PYTHON_GREETINGS_DIR }}
           ref: ${{ env.PYTHON_GREETINGS_REF }}
+          
       - name: Install dependencies
         working-directory:  ${{ env.PYTHON_GREETINGS_DIR }}
         run: pip3 install -r requirements.txt
