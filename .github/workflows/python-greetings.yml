@@ -14,7 +14,7 @@ env:
 
 jobs:
   install-pip-deps:
-    runs-on: $RUN_ENVIRONMENT
+    runs-on: ${{ RUN_ENVIRONMENT }}
     steps:
       - name: test
         run: echo Hello pain and suffering!
