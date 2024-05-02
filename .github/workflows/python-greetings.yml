@@ -30,24 +30,39 @@ jobs:
         working-directory:  ${{ env.PYTHON_GREETINGS_DIR }}
         run: pip3 install -r requirements.txt 
 
+  # deploy-to-dev:
+  #   runs-on: self-hosted
+  #   needs: [install-pip-deps]
+  #   steps:
+  #     - name: Starting Job
+  #       run: echo "Deploying to DEV"
+  #     - uses: actions/checkout@v3.5.2
+  #     - uses: actions/checkout@v3.5.2
+  #       with:
+  #         repository: ${{ env.PYTHON_GREETINGS_REPO }}
+  #         path: ${{ env.PYTHON_GREETINGS_DIR }}
+  #         ref: ${{ env.PYTHON_GREETINGS_REF }}
+  #     - name: Kill old server instance
+  #       run: "cmd /c \"pm2 delete greetings-app-dev & set \\\"errorlevel=0\\\"\""
+  #     - name: Start new server instance
+  #       working-directory: ${{ env.PYTHON_GREETINGS_DIR }}
+  #       run: "cmd /c \"pm2 start app.py --name greetings-app-dev -- --port=7001\""
+
   deploy-to-dev:
     runs-on: self-hosted
     needs: [install-pip-deps]
     steps:
-      - name: Starting Job
-        run: echo "Deploying to DEV"
       - uses: actions/checkout@v3.5.2
       - uses: actions/checkout@v3.5.2
         with:
           repository: ${{ env.PYTHON_GREETINGS_REPO }}
           path: ${{ env.PYTHON_GREETINGS_DIR }}
           ref: ${{ env.PYTHON_GREETINGS_REF }}
-      - name: Kill old server instance
-        run: "cmd /c \"pm2 delete greetings-app-dev & set \\\"errorlevel=0\\\"\""
-      - name: Start new server instance
-        working-directory: ${{ env.PYTHON_GREETINGS_DIR }}
-        run: "cmd /c \"pm2 start app.py --name greetings-app-dev -- --port=7001\""
-
+      - uses: ./.github/actions/deploy
+        with:
+          port: 7001
+          enviroment: 'dev'
+      
   tests-on-dev:
     runs-on: self-hosted
     needs: [deploy-to-dev]
