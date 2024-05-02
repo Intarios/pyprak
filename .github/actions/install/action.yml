@@ -2,8 +2,8 @@ runs:
   using: "composite"
   steps:
       - name: Starting Job
-        shell: pwsh
         run: echo "Installing pip dependencies"
+        shell: cmd
       - uses: actions/checkout@v3.5.2
         with:
           repository: ${{ env.PYTHON_GREETINGS_REPO }}
@@ -11,5 +11,5 @@ runs:
           ref: ${{ env.PYTHON_GREETINGS_REF }}
       - name: Install dependencies
         working-directory:  ${{ env.PYTHON_GREETINGS_DIR }}
-        shell: pwsh
         run: pip3 install -r requirements.txt
+        shell: cmd
