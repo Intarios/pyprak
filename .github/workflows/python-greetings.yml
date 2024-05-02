@@ -14,6 +14,7 @@ env:
   PYTHON_GREETINGS_DIR: "python-greetings"
   JS_API_FRAMEWORK_REPO: "mtararujs/course-js-api-framework"
   JS_API_FRAMEWORK_DIR: "js-api-framework"
+  JS_API_FRAMEWORK_REF: "7032ee862638108d4b9ad455e25e92a846c01ece"
 
 jobs:
   
