@@ -6,6 +6,7 @@ runs:
   using: "composite"
   steps:
       - name: Starting Job
+        shell: pwsh
         run: echo "Testing on ${{ inputs.enviroment }}"
       - uses: actions/checkout@v3.5.2
         with:
@@ -13,7 +14,9 @@ runs:
           path: "${{ env.JS_API_FRAMEWORK_DIR }}-${{ inputs.enviroment }}"
       - name: Install packages
         working-directory: "${{ env.JS_API_FRAMEWORK_DIR }}-${{ inputs.enviroment }}"
+        shell: pwsh
         run: "npm install"
       - name: Run test
         working-directory: "${{ env.JS_API_FRAMEWORK_DIR }}-${{ inputs.enviroment }}"
+        shell: pwsh
         run: "npm run greetings greetings_${{ inputs.enviroment }}"
