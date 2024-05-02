@@ -39,10 +39,8 @@ jobs:
           repository: 'Intarios/python-greetings'
           path: ${{ env.PYTHON_GREETINGS_DIR }}
       - name: Kill old server instance
-        shell: bash
         run: "cmd /c \"pm2 delete greetings-app-dev & set \\\"errorlevel=0\\\"\""
       - name: Start new server instance
-        shell: bash
         working-directory: ${{ env.PYTHON_GREETINGS_DIR }}
         run: "pm2 start app.py --name greetings-app-dev -- --port=7001"
 
