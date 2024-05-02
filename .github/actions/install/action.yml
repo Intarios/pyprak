@@ -1,0 +1,19 @@
+runs:
+  using: "composite"
+  steps:
+      - name: Starting Job
+        shell: pwsh
+        run: echo "Installing pip dependencies"
+      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: ${{ env.PYTHON_GREETINGS_REPO }}
+          path: ${{ env.PYTHON_GREETINGS_DIR }}
+          ref: ${{ env.PYTHON_GREETINGS_REF }}
+      - name: Install dependencies
+        working-directory:  ${{ env.PYTHON_GREETINGS_DIR }}
+        shell: pwsh
+        run: pip3 install -r requirements.txt
+      - name: Prepare PM2
+        shell: pwsh
+        run: "cmd /c \"pm2 delete all\""
