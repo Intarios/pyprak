@@ -8,13 +8,10 @@ on:
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
-env:
-  RUN_ENVIRONMENT: self-hosted
-
 
 jobs:
   install-pip-deps:
-    runs-on: ${{ RUN_ENVIRONMENT }}
+    runs-on: self-hosted
     steps:
       - name: test
         run: echo Hello pain and suffering!
