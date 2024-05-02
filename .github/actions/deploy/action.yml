@@ -1,0 +1,23 @@
+inputs:
+  port:
+    description: 'Port for server instance'
+    default: 7000
+  enviroment:
+    description: 'Environment'
+    default: 'unknown'
+runs:
+  using: "composite"
+  steps:
+      - name: Starting Job
+        run: echo "Deploying to ${{ inputs.enviroment }}"
+      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: ${{ env.PYTHON_GREETINGS_REPO }}
+          path: ${{ env.PYTHON_GREETINGS_DIR }}
+          ref: ${{ env.PYTHON_GREETINGS_REF }}
+      - name: Kill old server instance
+        run: "cmd /c \"pm2 delete greetings-app-${{ inputs.enviroment }} & set \\\"errorlevel=0\\\"\""
+      - name: Start new server instance
+        working-directory: ${{ env.PYTHON_GREETINGS_DIR }}
+        run: "cmd /c \"pm2 start app.py --name greetings-app-${{ inputs.enviroment }} -- --port=${{ inputs.port }}\""
