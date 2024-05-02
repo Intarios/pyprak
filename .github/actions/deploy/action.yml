@@ -9,12 +9,12 @@ runs:
   using: "composite"
   steps:
       - name: Starting Job
-        shell: bash
+        shell: pwsh
         run: echo "Deploying to ${{ inputs.enviroment }}"
       - name: Kill old server instance
-        shell: bash
+        shell: pwsh
         run: "cmd /c \"pm2 delete greetings-app-${{ inputs.enviroment }} & set \\\"errorlevel=0\\\"\""
       - name: Start new server instance
-        shell: bash
+        shell: pwsh
         working-directory: ${{ env.PYTHON_GREETINGS_DIR }}
         run: "cmd /c \"pm2 start app.py --name greetings-app-${{ inputs.enviroment }} -- --port=${{ inputs.port }}\""
