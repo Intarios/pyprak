@@ -9,6 +9,8 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 env:
+  PYTHON_GREETINGS_REPO: "mtararujs/python-greetings"
+  PYTHON_GREETINGS_REF: "4e911440a9886c7c26ccbb4eb55f0bc2a5067b51"
   PYTHON_GREETINGS_DIR: "python-greetings"
 
 jobs:
@@ -21,8 +23,9 @@ jobs:
       - uses: actions/checkout@v3.5.2
       - uses: actions/checkout@v3.5.2
         with:
-          repository: 'Intarios/python-greetings'
+          repository: ${{ env.PYTHON_GREETINGS_REPO }}
           path: ${{ env.PYTHON_GREETINGS_DIR }}
+          ref: ${{ env.PYTHON_GREETINGS_REF }}
       - name: Install dependencies
         working-directory:  ${{ env.PYTHON_GREETINGS_DIR }}
         run: pip3 install -r requirements.txt 
@@ -36,8 +39,9 @@ jobs:
       - uses: actions/checkout@v3.5.2
       - uses: actions/checkout@v3.5.2
         with:
-          repository: 'Intarios/python-greetings'
+          repository: ${{ env.PYTHON_GREETINGS_REPO }}
           path: ${{ env.PYTHON_GREETINGS_DIR }}
+          ref: ${{ env.PYTHON_GREETINGS_REF }}
       - name: Kill old server instance
         run: "cmd /c \"pm2 delete greetings-app-dev & set \\\"errorlevel=0\\\"\""
       - name: Start new server instance
