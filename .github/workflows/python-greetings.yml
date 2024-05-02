@@ -9,13 +9,14 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 env:
+  RUNNER: "self-hosted"
   PYTHON_GREETINGS_DIR: "python-greetings"
 
 jobs:
 
   install-pip-deps:
   
-    runs-on: self-hosted
+    runs-on: ${{ env.RUNNER }}
     steps:
       - name: Starting Job
         run: echo "Installing pip dependencies"
